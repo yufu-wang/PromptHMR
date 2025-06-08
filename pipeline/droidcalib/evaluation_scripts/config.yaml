@@ -1,0 +1,111 @@
+# Copyright (c) 2023 Robert Bosch GmbH
+# SPDX-License-Identifier: AGPL-3.0
+
+euroc:
+  base_path: 'datasets/EuRoC'
+  image_path: 'mav0/cam0/data'
+  sequences: ["MH_01_easy", "MH_02_easy", "MH_03_medium", "MH_04_difficult", "MH_05_difficult", 
+              "V1_01_easy", "V1_02_medium", "V1_03_difficult", "V2_01_easy", "V2_02_medium", "V2_03_difficult"] 
+  original_intr: [458.654, 457.296, 367.215, 248.375, -0.28340811, 0.07395907, 0.00019359, 1.76187114e-05, 0.0]
+  original_size: [752, 480]
+  rectified_intr: [458.654, 457.296, 367.215, 248.375]
+  rectified_size: [512, 320] 
+  crop: [0, 0]
+  trajectory_gts: ['datasets/EuRoC/euroc_groundtruth/MH_01_easy.txt',
+                    'datasets/EuRoC/euroc_groundtruth/MH_02_easy.txt',
+                    'datasets/EuRoC/euroc_groundtruth/MH_03_medium.txt',
+                    'datasets/EuRoC/euroc_groundtruth/MH_04_difficult.txt',
+                    'datasets/EuRoC/euroc_groundtruth/MH_05_difficult.txt',
+                    'datasets/EuRoC/euroc_groundtruth/V1_01_easy.txt',
+                    'datasets/EuRoC/euroc_groundtruth/V1_02_medium.txt',
+                    'datasets/EuRoC/euroc_groundtruth/V1_03_difficult.txt',
+                    'datasets/EuRoC/euroc_groundtruth/V2_01_easy.txt',
+                    'datasets/EuRoC/euroc_groundtruth/V2_02_medium.txt',
+                    'datasets/EuRoC/euroc_groundtruth/V2_03_difficult.txt']
+  droid_args: # from DROID-SLAM
+    buffer: 512
+    beta: 0.3
+    filter_thresh: 2.4
+    warmup: 15
+
+    keyframe_thresh: 3.5
+    frontend_thresh: 17.5
+    frontend_window: 20
+    frontend_radius: 2
+    frontend_nms: 1
+
+    backend_thresh: 24.0
+    backend_radius: 2
+    backend_nms: 2
+
+
+tum:
+  base_path: 'datasets/TUM-RGBD'
+  image_path: 'rgb'
+  sequences: ["rgbd_dataset_freiburg1_360", "rgbd_dataset_freiburg1_desk", "rgbd_dataset_freiburg1_desk2", 
+              "rgbd_dataset_freiburg1_floor", "rgbd_dataset_freiburg1_room", "rgbd_dataset_freiburg1_xyz", 
+              "rgbd_dataset_freiburg1_rpy", "rgbd_dataset_freiburg1_plant", "rgbd_dataset_freiburg1_teddy"]
+  original_intr: [517.3, 516.5, 318.6, 255.3, 0.2624, -0.9531, -0.0054, 0.0026, 1.1633]
+  original_size: [640, 480]  
+  rectified_intr: [517.3, 516.5, 318.6, 255.3]
+  rectified_size: [320, 240] 
+  crop: [16, 8]
+  trajectory_gts: ['datasets/TUM-RGBD/rgbd_dataset_freiburg1_360/groundtruth.txt',
+                    'datasets/TUM-RGBD/rgbd_dataset_freiburg1_desk/groundtruth.txt',
+                    'datasets/TUM-RGBD/rgbd_dataset_freiburg1_desk2/groundtruth.txt',
+                    'datasets/TUM-RGBD/rgbd_dataset_freiburg1_floor/groundtruth.txt',
+                    'datasets/TUM-RGBD/rgbd_dataset_freiburg1_room/groundtruth.txt',
+                    'datasets/TUM-RGBD/rgbd_dataset_freiburg1_xyz/groundtruth.txt',
+                    'datasets/TUM-RGBD/rgbd_dataset_freiburg1_rpy/groundtruth.txt',
+                    'datasets/TUM-RGBD/rgbd_dataset_freiburg1_plant/groundtruth.txt',
+                    'datasets/TUM-RGBD/rgbd_dataset_freiburg1_teddy/groundtruth.txt']
+  droid_args: # from DROID-SLAM
+    buffer: 512
+    beta: 0.6
+    filter_thresh: 1.75
+    warmup: 12
+
+    keyframe_thresh: 2.25
+    frontend_thresh: 12.0
+    frontend_window: 25
+    frontend_radius: 2
+    frontend_nms: 1
+
+    backend_thresh: 15.0
+    backend_radius: 2
+    backend_nms: 3
+
+
+tartan:
+  base_path: 'datasets/TartanAir/tartan-test-mono-release/mono'
+  image_path: ''
+  sequences: ["ME000", "ME001", "ME002", "ME003", "ME004", "ME005", "ME006", "ME007", 
+                "MH000", "MH001", "MH002", "MH003", "MH004", "MH005", "MH006", "MH007"]
+  original_intr: [320.0, 320.0, 320.0, 240.0, 0, 0, 0, 0, 0]
+  original_size: [640, 480] 
+  rectified_intr: [320.0, 320.0, 320.0, 240.0]
+  rectified_size: [512, 384] 
+  crop: [0, 0]
+  trajectory_gts:  ['datasets/TartanAir/gt/mono_gt/ME000.txt', 'datasets/TartanAir/gt/mono_gt/ME001.txt',
+                      'datasets/TartanAir/gt/mono_gt/ME002.txt', 'datasets/TartanAir/gt/mono_gt/ME003.txt',
+                      'datasets/TartanAir/gt/mono_gt/ME004.txt', 'datasets/TartanAir/gt/mono_gt/ME005.txt',
+                      'datasets/TartanAir/gt/mono_gt/ME006.txt', 'datasets/TartanAir/gt/mono_gt/ME007.txt',
+                      'datasets/TartanAir/gt/mono_gt/MH000.txt', 'datasets/TartanAir/gt/mono_gt/MH001.txt',
+                      'datasets/TartanAir/gt/mono_gt/MH002.txt', 'datasets/TartanAir/gt/mono_gt/MH003.txt',
+                      'datasets/TartanAir/gt/mono_gt/MH004.txt', 'datasets/TartanAir/gt/mono_gt/MH005.txt',
+                      'datasets/TartanAir/gt/mono_gt/MH006.txt', 'datasets/TartanAir/gt/mono_gt/MH007.txt']
+  droid_args: # from DROID-SLAM
+    buffer: 1000
+    beta: 0.3
+    filter_thresh: 2.4
+    warmup: 12
+
+    keyframe_thresh: 3.5
+    frontend_thresh: 15
+    frontend_window: 20
+    frontend_radius: 1
+    frontend_nms: 1
+
+    backend_thresh: 20.0
+    backend_radius: 2
+    backend_nms: 3

@@ -1,0 +1,28 @@
+calib: null
+focal: null
+stride: 1
+tracker: sam2
+kp2d_detector: vitpose
+depth_method: metric3d_vit_large
+use_depth: false
+max_height: 896
+calib_method: ba
+hand_pose: false
+smooth_cam: true
+use_spec_calib: true
+
+det_thresh: 0.1
+det_score_thresh: 0.1
+det_height_thresh: 0.3
+save_vos: false
+save_depth: false
+
+bbox_interp: true
+load_images_to_cpu: true
+run_post_opt: true
+run_post_opt_cam: true
+floor_fitting: ransac
+fps: 30
+postopt_lr: 1e-2
+num_max_people: 100
+max_fps: 60

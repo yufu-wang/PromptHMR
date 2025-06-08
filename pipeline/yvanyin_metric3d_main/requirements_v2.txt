@@ -1,0 +1,16 @@
+torch == 2.0.1
+torchvision == 0.15.2
+opencv-python
+numpy == 1.23.1
+xformers == 0.0.21
+Pillow
+DateTime
+matplotlib
+plyfile
+HTML4Vision
+timm
+tensorboardX
+imgaug
+iopath
+imagecorruptions
+mmcv

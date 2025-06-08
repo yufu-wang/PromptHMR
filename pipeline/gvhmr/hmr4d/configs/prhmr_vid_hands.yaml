@@ -1,0 +1,146 @@
+exp_name: ${exp_name_base}${exp_name_var}
+data_name: bedlam1-2_amass_bboxfix
+output_dir: outputs/${data_name}/${exp_name}
+exp_name_base: prhmr_hands_v2
+exp_name_var: ''
+ckpt_path: null
+resume_mode: null
+seed: 42
+task: fit
+
+pl_trainer:
+  devices: 2
+  strategy: ddp_find_unused_parameters_true
+  num_sanity_val_steps: 0
+  precision: 16-mixed
+  inference_mode: false
+  log_every_n_steps: 50
+  gradient_clip_val: 0.5
+  max_epochs: 500
+  check_val_every_n_epoch: 5
+logger:
+  save_dir: ${output_dir}
+  name: ''
+  version: tb
+
+model:
+  pipeline: ${pipeline}
+  optimizer: ${optimizer}
+  scheduler_cfg: ${scheduler_cfg}
+  ignored_weights_prefix:
+  - smplx
+  - pipeline.endecoder
+
+network:
+  output_dim: 151
+  max_len: 120
+  cliffcam_dim: 3
+  cam_angvel_dim: 6
+  imgseq_dim: 1024
+  latent_dim: 512
+  num_layers: 12
+  num_heads: 8
+  mlp_ratio: 4.0
+  pred_cam_dim: 3
+  static_conf_dim: 6
+  dropout: 0.1
+  avgbeta: true
+
+endecoder:
+  stats_name: MM_V1_AMASS_LOCAL_BEDLAM_CAM
+  noise_pose_k: 10
+  normalize: true
+
+pipeline:
+  args_denoiser3d: ${network}
+  args:
+    endecoder_opt: ${endecoder}
+    normalize_cam_angvel: true
+    weights:
+      cr_j3d: 500.0
+      transl_c: 1.0
+      cr_verts: 500.0
+      j2d: 1000.0
+      verts2d: 1000.0
+      transl_w: 1.0
+      static_conf_bce: 1.0
+    static_conf:
+      vel_thr: 0.15
+
+optimizer:
+  _partial_: true
+  lr: 0.0002
+scheduler_cfg:
+  scheduler:
+    milestones:
+    - 200
+    - 350
+    gamma: 0.5
+  interval: epoch
+  frequency: 1
+
+callbacks:
+  simple_ckpt_saver:
+    output_dir: ${output_dir}/checkpoints/
+    filename: e{epoch:03d}-s{step:06d}.ckpt
+    save_top_k: 100
+    every_n_epochs: 5
+    save_last: true
+    save_weights_only: false
+  prog_bar:
+    log_every_percent: 0.1
+    exp_name: ${exp_name}
+    data_name: ${data_name}
+  train_speed_timer:
+    N_avg: 5
+  model_checkpoint:
+    dirpath: ${output_dir}/checkpoints/
+
+data:
+  dataset_opts:
+    train: ${train_datasets}
+    val: ${test_datasets}
+    test: ${test_datasets}
+  loader_opts:
+    train:
+      batch_size: 256
+      num_workers: 12
+      persistent_workers: false
+      pin_memory: false
+      # prefetch_factor: 2
+    val:
+      batch_size: 1
+      num_workers: 1
+      persistent_workers: false
+      pin_memory: false
+    test:
+      batch_size: 1
+      num_workers: 1
+      persistent_workers: false
+      pin_memory: false
+  limit_each_trainset: null
+
+train_datasets:
+  pure_motion_amass:
+    cam_augmentation: v11
+  prhmr_bedlam:
+    version: hand_v2
+  prhmr_bedlam2:
+    version: hand_v2
+  # 3dpw:
+  #   version: v1
+
+test_datasets:
+  emdb1:
+    split: 1
+    version: hand_v2
+    flip_test: false
+  emdb2:
+    split: 2
+    version: hand_v2
+    flip_test: false
+  # rich:
+  #   vid_presets: null
+  # 3dpw:
+  #   version: v1
+  #   flip_test: false

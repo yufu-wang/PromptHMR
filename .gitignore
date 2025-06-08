@@ -1,0 +1,50 @@
+# Project specific data and submodule
+.vscode/
+**/.DS_Store
+*.mov
+*.mp4
+*.jpg
+example_video/
+results/
+lightning_logs/
+data_protect/
+data/*
+!data/examples/
+!data/examples/**.jpg
+!data/teaser.jpg
+pipeline/droidcalib/thirdparty
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+**/__pycache__/
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Jupyter Notebook
+.ipynb_checkpoints
+# *.ipynb
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
