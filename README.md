@@ -7,11 +7,12 @@ Official implementation for the paper (CVPR25): \
 
 <img src="data/teaser.jpg" width="700">
 
-https://github.com/user-attachments/assets/92c0f0dc-ae3b-45e2-9e80-9f67b26acbbd
+https://github.com/user-attachments/assets/72bcaed3-e3ab-4fe6-8a60-dba853fd4883
 
-https://github.com/user-attachments/assets/cffe7c2c-a415-43fb-900a-1b2f287caff7
+https://github.com/user-attachments/assets/f88c3eb2-5c00-4922-92d9-51b10b6e22ba
 
-https://github.com/user-attachments/assets/10fe1f00-b517-4b63-bea6-68aa99f0d81c
+https://github.com/user-attachments/assets/2b4bcee2-2163-4ecc-a5a4-1a3f921b913d
+
 
 
 ## Installation
