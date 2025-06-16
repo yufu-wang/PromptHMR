@@ -298,9 +298,6 @@ def convert_mcs_to_gltf(mcs_path: str, gltf_path: str, smplx_path: str) -> None:
     gltf_codec.save(gltf_path, GltfCompatibilityMode.Unreal)
     print(f"glTF file exported to {os.path.abspath(gltf_path)}")
     
-    # here there is gltf and buffer0.bin data, how can I combine them into a single file?
-
-    
 
 def export_scene_with_camera(
     smpl_buffers: List[bytes],
