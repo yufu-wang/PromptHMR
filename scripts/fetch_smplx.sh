@@ -34,3 +34,4 @@ rm -rf data/body_models/smpl/smpl.zip
 
 # Supplementary files
 gdown --folder -O ./data/ https://drive.google.com/drive/folders/1JU7CuU2rKkwD7WWjvSZJKpQFFk_Z6NL7?usp=share_link
+gdown -O ./data/body_models/smplx/ 1v9Qy7ZXWcTM8_a9K2nSLyyVrJMFYcUOk

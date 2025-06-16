@@ -1,9 +1,19 @@
+import os
 import json
 import base64
 from typing import List, Dict, Any, Union, Tuple
 import numpy as np
 import scipy as sp
 from numpy.typing import NDArray
+
+from gloss import ViewerDummy
+
+from smpl_rs import SmplCache
+from smpl_rs.codec import McsCodec, GltfCodec
+from smpl_rs.plugins import SmplPlugin
+from smpl_rs.types import SmplType, Gender, GltfCompatibilityMode
+from smpl_rs.components import GlossInterop
+
 
 def create_gltf_structure(num_frames: int) -> Dict[str, Any]:
     """Create the initial structure of the GLTF file.
@@ -78,6 +88,7 @@ def add_camera_intrinsics(
         # "zfar": 100.0,
         "aspectRatio": float(aspect_ratio)
     }
+
 
 def add_smpl_buffers_to_gltf(
     gltf: Dict[str, Any],
@@ -238,6 +249,7 @@ def add_camera_animation(
         ]
     })
 
+
 def write_gltf_to_file(gltf: Dict[str, Any], output_path: str) -> None:
     """Write the GLTF structure to a file.
     
@@ -248,6 +260,48 @@ def write_gltf_to_file(gltf: Dict[str, Any], output_path: str) -> None:
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(gltf, f, indent=2)
 
+
+def convert_mcs_to_gltf(mcs_path: str, gltf_path: str, smplx_path: str) -> None:
+    """Convert an MCS file to a GLTF file.
+    
+    Args:
+        mcs_path: Path to the MCS file.
+        gltf_path: Path to write the GLTF file.
+    """
+    viewer = ViewerDummy()    
+
+    mcs_codec = McsCodec.from_file(mcs_path)
+
+    print("\nInformation from the MCS file:")
+    print(f"Number of frames: {mcs_codec.num_frames}")
+    print(f"Number of bodies: {mcs_codec.num_bodies}")
+    print(f"Has camera: {mcs_codec.has_camera}")
+    print(f"Frame rate: {mcs_codec.frame_rate}")
+
+    entity_builders = mcs_codec.to_entity_builders()
+
+    for current_ent, builder in enumerate(entity_builders):
+        entity = viewer.get_or_create_entity(name=f"mcs_entity_{current_ent}")
+        entity.insert(builder)
+        interop = GlossInterop(with_uv=True)
+        entity.insert(interop)
+
+    smpl_models = SmplCache.default()
+    smpl_models.set_lazy_loading(SmplType.SmplX, Gender.Neutral, smplx_path)
+
+    viewer.add_resource(smpl_models)
+    viewer.insert_plugin(SmplPlugin(autorun=False))
+    viewer.run_manual_plugins()
+
+    # Create the writer and export as Glb
+    gltf_codec = GltfCodec.from_scene(viewer.get_scene().ptr_idx(), export_camera = True)
+    gltf_codec.save(gltf_path, GltfCompatibilityMode.Unreal)
+    print(f"glTF file exported to {os.path.abspath(gltf_path)}")
+    
+    # here there is gltf and buffer0.bin data, how can I combine them into a single file?
+
+    
+
 def export_scene_with_camera(
     smpl_buffers: List[bytes],
     frame_presences: List[List[int]],
@@ -257,7 +311,8 @@ def export_scene_with_camera(
     translations: NDArray[np.float32],
     focal_length: float,
     principal_point: Tuple[float, float],
-    frame_rate: float
+    frame_rate: float,
+    smplx_path: str
 ) -> None:
     """Export the GLTF file with SMPL bodies and animated camera.
     
@@ -277,27 +332,5 @@ def export_scene_with_camera(
     add_smpl_buffers_to_gltf(gltf, smpl_buffers, frame_presences)
     add_camera_animation(gltf, rotation_matrices, translations, num_frames, frame_rate)
     write_gltf_to_file(gltf, output_path)
-    print(f"GLTF file exported to {output_path}")
-
-if __name__ == "__main__":
-    # Example usage
-    MFV_RUN_NAME = "dancing_on_beach"
-    SMPL_PATHS = [f"../mfv_with_cameras/{MFV_RUN_NAME}/{MFV_RUN_NAME}_sub-1.smpl"]
-    FRAME_RATE = np.load(SMPL_PATHS[0])["frameRate"]
-    FRAME_PRESENCES = [[0, 511]]
-    NUM_FRAMES = 511
-    camera_data = np.load(f"../mfv_with_cameras/{MFV_RUN_NAME}/camera.npz")
-
-    smpl_buffer_data = [open(path, 'rb').read() for path in SMPL_PATHS]
-
-    export_scene_with_camera(
-        smpl_buffer_data,
-        FRAME_PRESENCES,
-        NUM_FRAMES,
-        f"./data/mcs_w_camera/{MFV_RUN_NAME}.mcs",
-        camera_data["R"],
-        camera_data["T"],
-        camera_data["focal_length"],
-        camera_data["principal_point"],
-        FRAME_RATE
-    )
+    print(f"MCS file exported to {os.path.abspath(output_path)}")
+    convert_mcs_to_gltf(output_path, output_path.replace(".mcs", ".glb"), smplx_path)

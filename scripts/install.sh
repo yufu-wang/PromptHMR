@@ -128,7 +128,6 @@ if [ "$PT_VERSION" == "2.4" ]; then
         pip install data/wheels/droid_backends_intr-0.3-cp311-cp311-linux_x86_64.whl
         pip install data/wheels/lietorch-0.3-cp311-cp311-linux_x86_64.whl
         pip install data/wheels/sam2-1.5-cp311-cp311-linux_x86_64.whl
-        pip install data/wheels/gloss-0.5.0-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
     fi
 
 elif [ "$PT_VERSION" == "2.6" ]; then
@@ -151,8 +150,6 @@ elif [ "$PT_VERSION" == "2.6" ]; then
         pip install data/wheels/sam2-1.6-cp312-cp312-linux_x86_64.whl
         pip install data/wheels/detectron2-0.9-cp312-cp312-linux_x86_64.whl
         pip install data/wheels/droid_backends_intr-0.4-cp312-cp312-linux_x86_64.whl
-        # pip install data/wheels/gloss_rs-0.6.0-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
-        pip install data/wheels/gloss-0.5.0-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
         pip install data/wheels/lietorch-0.4-cp312-cp312-linux_x86_64.whl
     fi
 fi

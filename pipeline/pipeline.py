@@ -395,13 +395,11 @@ class Pipeline:
             focal_length=self.results['camera_world']['img_focal'],
             principal_point=self.results['camera_world']['img_center'],
             frame_rate=float(self.cfg.fps),
+            smplx_path='data/body_models/smplx/SMPLX_neutral_array_f32_slim.npz',
         )
-        print(f'MCS file saved to "{os.path.abspath(MCS_OUTPUT_PATH)}"')
-        print(f'You can drag and drop the "world4d.mcs" file to https://me.meshcapade.com/editor to view the result')
-        
-        
-        shutil.copy(MCS_OUTPUT_PATH, f'{seq_folder}/world4d.glb')
-        print(f'GLB file saved to "{os.path.abspath(f"{seq_folder}/world4d.glb")}"')
-        print(f'You can import the "world4d.glb" file on Blender to view the result')
+
+        print("Usage:")
+        print(f'\tYou can drag and drop the "world4d.mcs" file to https://me.meshcapade.com/editor to view the result')
+        print(f'\tYou can import the "world4d.glb" file on Blender to view the result')
         
         return self.results
