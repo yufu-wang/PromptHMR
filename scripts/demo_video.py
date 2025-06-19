@@ -34,8 +34,11 @@ def main(input_video='data/examples/boxing_short.mp4',
     world4d = {i:world4d[k] for i,k in enumerate(world4d)}
 
     # Get vertices
+    all_verts = []
     for k in world4d:
         world3d = world4d[k]
+        if len(world3d['track_id']) == 0: # no people
+            continue
         rotmat = axis_angle_to_matrix(world3d['pose'].reshape(-1, 55, 3))
         verts = smplx(global_orient = rotmat[:,:1].cuda(),
                       body_pose = rotmat[:,1:22].cuda(),
@@ -43,9 +46,10 @@ def main(input_video='data/examples/boxing_short.mp4',
                       transl = world3d['trans'].cuda()).vertices.cpu().numpy()
         
         world3d['vertices'] = verts
-        if k == 0:  # need to compute over the entire sequence
-            [gv, gf, gc] = get_floor_mesh(torch.tensor(verts), scale=3)
+        all_verts.append(torch.tensor(verts, dtype=torch.bfloat16))
 
+    all_verts = torch.cat(all_verts)
+    [gv, gf, gc] = get_floor_mesh(all_verts, scale=2)
 
     # Viser
     if run_viser:

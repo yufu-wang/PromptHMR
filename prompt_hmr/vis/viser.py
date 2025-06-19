@@ -216,19 +216,20 @@ def viser_vis_world4d(images, world4d, faces, init_fps=25, block=False, floor=No
 
         # Place meshes in the frame
         track_id = world4d[i]['track_id']
-        vertices = world4d[i]['vertices']
-        vertices = copy.deepcopy(vertices)
-        for tid, verts in zip(track_id, vertices):
-            mesh_nodes.append(
-                server.scene.add_mesh_simple(
-                    name=f"/frames/t{i}/human_{tid}",
-                    vertices=verts,
-                    faces=faces,
-                    flat_shading=False,
-                    wireframe=False,
-                    color=get_color(tid),
+        if len(track_id) > 0:
+            vertices = world4d[i]['vertices']
+            vertices = copy.deepcopy(vertices)
+            for tid, verts in zip(track_id, vertices):
+                mesh_nodes.append(
+                    server.scene.add_mesh_simple(
+                        name=f"/frames/t{i}/human_{tid}",
+                        vertices=verts,
+                        faces=faces,
+                        flat_shading=False,
+                        wireframe=False,
+                        color=get_color(tid),
+                    )
                 )
-            )
 
         # Place the frustum.
         image = images[i]

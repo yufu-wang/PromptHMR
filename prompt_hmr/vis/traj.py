@@ -132,7 +132,7 @@ def get_floor_mesh(pred_vert_gr, z_start=0, z_end=-1, scale=1.5, floor_color=Non
     cx = cx.item()
 
     # Center Z: optionally using only a subsection
-    verts = verts[z_start:z_end]
+    verts = verts[:, z_start:z_end]
     cz = (verts.mean(1).max(0)[0] + verts.mean(1).min(0)[0])[[2]] / 2.0
     cz = cz.item()
 
