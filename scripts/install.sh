@@ -118,7 +118,12 @@ if [ "$PT_VERSION" == "2.4" ]; then
     conda install -c conda-forge suitesparse -y
 
     pip install -r requirements.txt 
-
+    mkdir python_libs
+    git clone https://github.com/Arthur151/chumpy python_libs/chumpy
+    python -m pip install -e python_libs/chumpy --no-build-isolation
+    # git clone https://github.com/facebookresearch/pytorch3d.git python_libs/pytorch3d
+    # python -m pip install -e python_libs/pytorch3d --no-build-isolation
+    
     pip install -U xformers==0.0.27.post2 --index-url https://download.pytorch.org/whl/cu121 --no-deps
 
     if [ "$WORLD_VIDEO" == "true" ]; then
@@ -141,6 +146,11 @@ elif [ "$PT_VERSION" == "2.6" ]; then
     pip install torch-scatter -f https://data.pyg.org/whl/torch-2.6.0+cu126.html
 
     pip install -r requirements.txt
+    mkdir python_libs
+    git clone https://github.com/Arthur151/chumpy python_libs/chumpy
+    python -m pip install -e python_libs/chumpy --no-build-isolation
+    # git clone https://github.com/facebookresearch/pytorch3d.git python_libs/pytorch3d
+    # python -m pip install -e python_libs/pytorch3d --no-build-isolation
 
     pip install -U xformers==0.0.29.post2 --index-url https://download.pytorch.org/whl/cu126 --no-deps
 

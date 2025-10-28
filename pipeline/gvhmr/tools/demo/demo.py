@@ -9,7 +9,7 @@ from hmr4d.utils.pylogger import Log
 import hydra
 from hydra import initialize_config_module, compose
 from pathlib import Path
-from pytorch3d.transforms import quaternion_to_matrix
+from hmr4d.utils.pytorch3d_transform import quaternion_to_matrix
 
 from hmr4d.configs import register_store_gvhmr
 from hmr4d.utils.video_io_utils import (

@@ -2,7 +2,6 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch.nn.utils.rnn import pad_sequence
-#from pytorch3d.loss import chamfer_distance
 
 class AdabinsLoss(nn.Module):
     """

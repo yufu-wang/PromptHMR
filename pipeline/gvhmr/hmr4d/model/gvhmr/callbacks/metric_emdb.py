@@ -20,7 +20,7 @@ from hmr4d.utils.smplx_utils import make_smplx
 from einops import einsum, rearrange
 
 from hmr4d.utils.wis3d_utils import make_wis3d, add_motion_as_lines
-from hmr4d.utils.vis.renderer import Renderer, get_global_cameras_static
+
 from hmr4d.utils.geo.hmr_cam import estimate_focal_length
 from hmr4d.utils.video_io_utils import read_video_np, save_video, read_images_np
 import imageio
@@ -160,6 +160,7 @@ class MetricMocap(pl.Callback):
             # add_motion_as_lines(target_w_j3d, wis3d, name="target_ay_j3d")
 
         if False:  # Render incam
+            from hmr4d.utils.vis.renderer import Renderer, get_global_cameras_static
             # -- rendering code -- #
             vname = batch["meta_render"][0]["name"]
             video_path = batch["meta_render"][0]["video_path"]
@@ -208,7 +209,7 @@ class MetricMocap(pl.Callback):
             save_video(output_images, out_fn, crf=30)
 
         if False:  # Visualize incam + global results
-
+            from hmr4d.utils.vis.renderer import Renderer, get_global_cameras_static
             def move_to_start_point_face_z(verts):
                 "XZ to origin, Start from the ground, Face-Z"
                 verts = verts.clone()  # (L, V, 3)
