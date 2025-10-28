@@ -2,10 +2,9 @@ import numpy as np
 import cv2
 import torch
 import torch.nn.functional as F
-# from pytorch3d.transforms import so3_exp_map, so3_log_map
-# import pytorch3d.ops.knn as knn
+# from hmr4d.utils.pytorch3d_transform import so3_exp_map, so3_log_map
 from hmr4d.utils.pylogger import Log
-# from pytorch3d.transforms import euler_angles_to_matrix
+# from hmr4d.utils.pytorch3d_transform import euler_angles_to_matrix
 import hmr4d.utils.matrix as matrix
 from einops import einsum, rearrange, repeat
 from hmr4d.utils.geo.quaternion import qbetween

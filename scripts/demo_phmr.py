@@ -23,7 +23,7 @@ from pipeline.camcalib.model import CameraRegressorNetwork
 from segment_anything import SamPredictor, sam_model_registry
 
 
-def main(image='data/examples/example_1.jpg', gravity_align=False, detect_conf=0.3, render_overlap=True):
+def main(image='data/examples/example_1.jpg', gravity_align=False, detect_conf=0.3, render_overlap=False):
     savedir = os.path.basename(image)
     os.makedirs(savedir, exist_ok=True)
 
@@ -51,6 +51,7 @@ def main(image='data/examples/example_1.jpg', gravity_align=False, detect_conf=0
     verts = output['vertices']
     focal = batch[0]['cam_int_original'][0,0,0]
     if render_overlap:
+        print("please install Pytorch3D to enable overlay rendering.")
         from prompt_hmr.vis.renderer import Renderer
         renderer = Renderer(img.shape[1], img.shape[0], focal, bin_size=0)
         img_rend = renderer.render_meshes(verts, smplx.faces, img)

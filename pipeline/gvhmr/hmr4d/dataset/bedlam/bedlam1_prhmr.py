@@ -5,7 +5,7 @@ import numpy as np
 import torch
 from tqdm import tqdm
 from hmr4d.utils.pylogger import Log
-from pytorch3d.transforms import axis_angle_to_matrix, matrix_to_axis_angle
+from hmr4d.utils.pytorch3d_transform import axis_angle_to_matrix, matrix_to_axis_angle
 from time import time
 
 from hmr4d.configs import MainStore, builds

@@ -14,7 +14,7 @@ import pandas as pd
 from tqdm import tqdm
 from glob import glob
 import matplotlib.pyplot as plt
-from renderer_pyrd import Renderer
+
 from smplcodec.codec import SMPLCodec
 from rotation_conversions import axis_angle_to_matrix, matrix_to_axis_angle
 
@@ -196,7 +196,7 @@ def visualize(image_path, verts,focal_length, smpl_faces):
     if rotate_flag:
         img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
     h,w,c = img.shape
-
+    from renderer_pyrd import Renderer
     renderer = Renderer(focal_length=focal_length, img_w=w, img_h=h,
                             faces=smpl_faces)
     front_view = renderer.render_front_view(verts.unsqueeze(0).detach().cpu().numpy(),
@@ -309,7 +309,7 @@ def visualize_crop(image_path, center, scale, verts,focal_length, smpl_faces):
         img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
 
     h,w,c = img.shape
-
+    from renderer_pyrd import Renderer
     renderer = Renderer(focal_length=focal_length, img_w=w, img_h=h,
                             faces=smpl_faces)
     front_view = renderer.render_front_view(verts.unsqueeze(0).detach().cpu().numpy(),

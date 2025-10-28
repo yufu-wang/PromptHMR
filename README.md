@@ -18,7 +18,7 @@ https://github.com/user-attachments/assets/2b4bcee2-2163-4ecc-a5a4-1a3f921b913d
 ## Installation
 1. Clone this project.
 ```Bash
-git clone https://github.com/yufu-wang/phmr_dev
+git clone https://github.com/yufu-wang/PromptHMR
 ```
 2. Run installation script to create a conda environment and install requirements. We provide two options: either torch==2.4.0+cu121 (pass `--pt_version=2.4`) or torch==2.6.0+cu126 (pass `--pt_version=2.6`). (Optional) If you want to run the world-coordinate multi-human video pipeline, you will need additional thirdparty packages.
 ```Bash

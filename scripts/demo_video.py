@@ -23,36 +23,38 @@ def main(input_video='data/examples/boxing_short.mp4',
     smplx = SMPLX_Layer(SMPLX_PATH).cuda()
 
     output_folder = 'results/' + os.path.basename(input_video).split('.')[0]
+    if os.path.exists(os.path.join(output_folder, "results.pkl")):
+        return 
     pipeline = Pipeline(static_cam=static_camera)
     results = pipeline.__call__(input_video, 
                                 output_folder, 
                                 save_only_essential=True)
-   
-    # Downsample for viser visualization
-    images = pipeline.images[:viser_total][::viser_subsample]
-    world4d = pipeline.create_world4d(step=viser_subsample, total=viser_total)
-    world4d = {i:world4d[k] for i,k in enumerate(world4d)}
-
-    # Get vertices
-    all_verts = []
-    for k in world4d:
-        world3d = world4d[k]
-        if len(world3d['track_id']) == 0: # no people
-            continue
-        rotmat = axis_angle_to_matrix(world3d['pose'].reshape(-1, 55, 3))
-        verts = smplx(global_orient = rotmat[:,:1].cuda(),
-                      body_pose = rotmat[:,1:22].cuda(),
-                      betas = world3d['shape'].cuda(),
-                      transl = world3d['trans'].cuda()).vertices.cpu().numpy()
-        
-        world3d['vertices'] = verts
-        all_verts.append(torch.tensor(verts, dtype=torch.bfloat16))
-
-    all_verts = torch.cat(all_verts)
-    [gv, gf, gc] = get_floor_mesh(all_verts, scale=2)
-
     # Viser
     if run_viser:
+        # Downsample for viser visualization
+        images = pipeline.images[:viser_total][::viser_subsample]
+        world4d = pipeline.create_world4d(step=viser_subsample, total=viser_total)
+        world4d = {i:world4d[k] for i,k in enumerate(world4d)}
+
+        # Get vertices
+        all_verts = []
+        for k in world4d:
+            world3d = world4d[k]
+            if len(world3d['track_id']) == 0: # no people
+                continue
+            rotmat = axis_angle_to_matrix(world3d['pose'].reshape(-1, 55, 3))
+            verts = smplx(global_orient = rotmat[:,:1].cuda(),
+                        body_pose = rotmat[:,1:22].cuda(),
+                        betas = world3d['shape'].cuda(),
+                        transl = world3d['trans'].cuda()).vertices.cpu().numpy()
+            
+            world3d['vertices'] = verts
+            all_verts.append(torch.tensor(verts, dtype=torch.bfloat16))
+
+        all_verts = torch.cat(all_verts)
+        [gv, gf, gc] = get_floor_mesh(all_verts, scale=2)
+
+    
         server, gui = viser_vis_world4d(images, 
                                         world4d, 
                                         smplx.faces, 

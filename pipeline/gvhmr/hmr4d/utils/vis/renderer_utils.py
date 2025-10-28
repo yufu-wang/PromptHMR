@@ -1,4 +1,4 @@
-from hmr4d.utils.vis.renderer import Renderer
+
 from tqdm import tqdm
 import numpy as np
 
@@ -8,7 +8,8 @@ def simple_render_mesh(render_dict):
     width, height, focal_length = render_dict["whf"]
     faces = render_dict["faces"]
     verts = render_dict["verts"]
-
+    
+    from hmr4d.utils.vis.renderer import Renderer
     renderer = Renderer(width, height, focal_length, device="cuda", faces=faces)
     outputs = []
     for i in tqdm(range(len(verts)), desc=f"Rendering"):
@@ -29,6 +30,7 @@ def simple_render_mesh_background(render_dict, VI=50, colors=[0.8, 0.8, 0.8]):
         background = [background] * N_frames
     height, width = background[0].shape[:2]
 
+    from hmr4d.utils.vis.renderer import Renderer
     renderer = Renderer(width, height, device="cuda", faces=faces, K=K)
     outputs = []
     for i in tqdm(range(len(verts)), desc=f"Rendering"):
