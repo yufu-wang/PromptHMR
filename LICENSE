@@ -24,8 +24,9 @@ Any other use, in particular any use for commercial, pornographic, military, or 
 
 The Data & Software may not be used for pornographic purposes or to generate pornographic material whether commercial or not. This license also prohibits the use of the Software to train methods/algorithms/neural networks/etc. for commercial, pornographic, military, surveillance, or defamatory use of any kind. By downloading the Data & Software, you agree not to reverse engineer it.
 
-No Distribution
-The Model & Software and the license herein granted shall not be copied, shared, distributed, re-sold, offered for re-sale, transferred or sub-licensed in whole or in part except that you may make one copy for archive purposes only.
+Derivative Works
+You may modify the Model & Software and create derivative works for your own non-commercial scientific research purposes. Any derivative works created from or incorporating the Model and/or the Software — including but not limited to modified versions, extended code, retrained models, fine-tuned models, or other artifacts generated through use of the Model & Software — shall remain subject to all the same license terms and restrictions as the original, in particular the condition of Non-Commercial Scientific Research Use Only.
+You may not distribute, sublicense, or otherwise make available any derivative work under terms that would permit commercial use, nor remove or alter any copyright, attribution, or license notices.
 
 Disclaimer of Representations and Warranties
 You expressly acknowledge and agree that the Model & Software results from basic research, is provided “AS IS”, may contain errors, and that any use of the Model & Software is at your sole risk. LICENSOR MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND CONCERNING THE MODEL & SOFTWARE, NEITHER EXPRESS NOR IMPLIED, AND THE ABSENCE OF ANY LEGAL OR ACTUAL DEFECTS, WHETHER DISCOVERABLE OR NOT. Specifically, and not to limit the foregoing, licensor makes no representations or warranties (i) regarding the merchantability or fitness for a particular purpose of the Model & Software, (ii) that the use of the Model & Software will not infringe any patents, copyrights or other intellectual property rights of a third party, and (iii) that the use of the Model & Software will not cause any damage of any kind to you or a third party.
