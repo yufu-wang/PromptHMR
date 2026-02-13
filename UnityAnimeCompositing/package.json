@@ -1,0 +1,30 @@
+{
+  "name": "com.anime.compositing",
+  "version": "1.0.0",
+  "displayName": "Anime Compositing System",
+  "description": "基于 MRT 的日本动画风格三层级合成系统。使用多渲染目标技术实现类似传统动画拍摄的工作流程。",
+  "unity": "2019.4",
+  "keywords": [
+    "anime",
+    "toon",
+    "cel-shading",
+    "mrt",
+    "compositing",
+    "rendering",
+    "shader",
+    "npr"
+  ],
+  "author": {
+    "name": "Your Name",
+    "email": "your.email@example.com"
+  },
+  "type": "tool",
+  "dependencies": {},
+  "samples": [
+    {
+      "displayName": "Basic Example",
+      "description": "基础示例场景，展示如何使用 Anime Compositing 系统",
+      "path": "Examples"
+    }
+  ]
+}
