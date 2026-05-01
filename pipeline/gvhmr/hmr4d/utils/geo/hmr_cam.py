@@ -445,6 +445,7 @@ def get_bbx_xys_from_xyxy(bbx_xyxy, base_enlarge=1.2):
         bbx_xys: (N, 3) [center_x, center_y, size]
     """
 
+    bbx_xyxy = bbx_xyxy.float()  # ensure float so aspect-ratio division in get_bbx_xys is dtype-safe
     i_p2d = torch.stack([bbx_xyxy[:, [0, 1]], bbx_xyxy[:, [2, 3]]], dim=1)  # (L, 2, 2)
     bbx_xys = get_bbx_xys(i_p2d[None], base_enlarge=base_enlarge)[0]
     return bbx_xys

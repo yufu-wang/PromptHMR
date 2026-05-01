@@ -215,6 +215,15 @@ class VitInference:
         bbox[[1, 3]] = np.clip(bbox[[1, 3]] + [-pad_bbox, pad_bbox], 0, img.shape[0])
         bbox = bbox.astype(np.int32)
 
+        # Guard against degenerate bboxes (zero width/height after clipping):
+        # pad_image() divides by image_height, so an empty crop crashes with ZeroDivisionError.
+        if bbox[2] - bbox[0] < 2:
+            bbox[2] = min(bbox[0] + 2, img.shape[1])
+            bbox[0] = max(bbox[2] - 2, 0)
+        if bbox[3] - bbox[1] < 2:
+            bbox[3] = min(bbox[1] + 2, img.shape[0])
+            bbox[1] = max(bbox[3] - 2, 0)
+
         # Crop image and pad to 3/4 aspect ratio
         img_inf = img[bbox[1]:bbox[3], bbox[0]:bbox[2]]
         img_inf, (left_pad, top_pad) = pad_image(img_inf, 3 / 4)

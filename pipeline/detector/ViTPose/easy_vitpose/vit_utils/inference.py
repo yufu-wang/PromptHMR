@@ -41,6 +41,13 @@ def draw_bboxes(image, bounding_boxes, boxes_id, scores):
 def pad_image(image: np.ndarray, aspect_ratio: float) -> np.ndarray:
     # Get the current aspect ratio of the image
     image_height, image_width = image.shape[:2]
+    # Guard against zero-area inputs (degenerate bbox crops, malformed frames).
+    # Without this, image_width / image_height crashes with ZeroDivisionError.
+    if image_height == 0 or image_width == 0:
+        min_h = max(image_height, 1)
+        min_w = max(image_width, 1)
+        image = np.zeros((min_h, min_w) + image.shape[2:], dtype=image.dtype)
+        image_height, image_width = min_h, min_w
     current_aspect_ratio = image_width / image_height
 
     left_pad = 0
